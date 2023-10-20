@@ -9,32 +9,32 @@
 
 #define MAX_FD	1024
 
-char *process_line(int nl_position, char *buffer)
+char *process_line(int nl_position, char **buffer)
 {
 	char	*res;
 
-	res = ft_substr(buffer, 0, nl_position);
-	buffer = ft_substr(buffer, nl_position, BUFFER_SIZE);
+	res = ft_substr(*buffer, 0, nl_position);
+	*buffer = ft_substr(*buffer, nl_position, BUFFER_SIZE);
 	return (res);
 }
 
-char	*read_line(int fd, char *buffer)
+char	*read_line(int fd, char **buffer)
 {
 	ssize_t	bytes_read;
 	char	*nl;
 	char	*read_buffer;
 
-	nl = ft_strchr(buffer, '\n');
+	nl = ft_strchr(*buffer, '\n');
 	read_buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	while (nl == NULL)
 	{
 		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
 		if (bytes_read <= 0)
-			return (buffer);
-		buffer = ft_strjoin(buffer, read_buffer);
-		nl = ft_strchr(buffer, '\n');
+			return (*buffer);
+		*buffer = ft_strjoin(*buffer, read_buffer);
+		nl = ft_strchr(*buffer, '\n');
 	}
-	return (process_line(nl - buffer + 1, buffer));
+	return (process_line(nl - *buffer + 1, buffer));
 }
 
 char *get_next_line(int fd)
@@ -46,6 +46,6 @@ char *get_next_line(int fd)
 		return (NULL);
 	if (buffers[fd] == NULL)
 		buffers[fd] = ft_strdup("");
-	line = read_line(fd, buffers[fd]);
+	line = read_line(fd, &buffers[fd]);
 	return (line);
 }
