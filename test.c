@@ -8,8 +8,12 @@ int main()
 {
 	int	fd;
 
-	fd = open("tests/01", O_RDONLY);
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
+	fd = open("tests/big_line_no_nl", O_RDONLY);
+
+	char *line = get_next_line(fd);
+	printf("%zu\n", ft_strlen(line));
+	printf(":%s:", line);
+	free(line);
+	// printf(":%s:", get_next_line(fd));
+	// printf(":%s:", get_next_line(fd));
 }
