@@ -15,19 +15,9 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#ifndef BUFFER_SIZE
-#define BUFFER_SIZE 1
-#endif
-
 #define MAX_FD	1024
 
-// void	free_null(char **ptr)
-// {
-// 	free(*ptr);
-// 	*ptr = NULL;
-// }
-
-char *process_line(int nl_position, char **buffer)
+char	*process_line(int nl_position, char **buffer)
 {
 	char	*res;
 	char	*tmp;
@@ -62,7 +52,7 @@ char	*read_line(int fd, char **buffer, char *read_buffer)
 	{
 		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
 		if (bytes_read <= 0)
-			return process_line(bytes_read, buffer);
+			return (process_line(bytes_read, buffer));
 		read_buffer[bytes_read] = '\0';
 		tmp = *buffer;
 		*buffer = ft_strjoin(*buffer, read_buffer);
@@ -72,9 +62,9 @@ char	*read_line(int fd, char **buffer, char *read_buffer)
 	return (process_line(nl - *buffer + 1, buffer));
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static char	*buffers[MAX_FD + 1] = { NULL };
+	static char	*buffers[MAX_FD + 1] = {NULL};
 	char		*line;
 	char		*read_buffer;
 
