@@ -44,11 +44,11 @@ char	*create_line(int nl_position, char **buffer)
 char	*read_line(int fd, char **buffer, char *read_buffer)
 {
 	ssize_t	bytes_read;
-	char	*nl;
+	char	*new_line;
 	char	*tmp;
 
-	nl = ft_strchr(*buffer, '\n');
-	while (nl == NULL)
+	new_line = ft_strchr(*buffer, '\n');
+	while (new_line == NULL)
 	{
 		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
 		if (bytes_read <= 0)
@@ -57,9 +57,9 @@ char	*read_line(int fd, char **buffer, char *read_buffer)
 		tmp = *buffer;
 		*buffer = ft_strjoin(*buffer, read_buffer);
 		free(tmp);
-		nl = ft_strchr(*buffer, '\n');
+		new_line = ft_strchr(*buffer, '\n');
 	}
-	return (create_line(nl - *buffer + 1, buffer));
+	return (create_line(new_line - *buffer + 1, buffer));
 }
 
 char	*get_next_line(int fd)
