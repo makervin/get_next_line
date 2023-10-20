@@ -17,12 +17,12 @@
 
 #define MAX_FD	1024
 
-char	*process_line(int nl_position, char **buffer)
+char	*create_line(int nl_position, char **buffer)
 {
 	char	*res;
 	char	*tmp;
 
-	if (nl_position <= 0)
+	if (nl_position == 0)
 	{
 		if (**buffer == '\0')
 		{
@@ -52,14 +52,14 @@ char	*read_line(int fd, char **buffer, char *read_buffer)
 	{
 		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
 		if (bytes_read <= 0)
-			return (process_line(bytes_read, buffer));
+			return (create_line(0, buffer));
 		read_buffer[bytes_read] = '\0';
 		tmp = *buffer;
 		*buffer = ft_strjoin(*buffer, read_buffer);
 		free(tmp);
 		nl = ft_strchr(*buffer, '\n');
 	}
-	return (process_line(nl - *buffer + 1, buffer));
+	return (create_line(nl - *buffer + 1, buffer));
 }
 
 char	*get_next_line(int fd)
