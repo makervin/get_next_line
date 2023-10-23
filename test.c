@@ -21,7 +21,9 @@ int	main(void)
 	int		fd;
 	char	*line;
 
-	fd = open("tests/big_line_no_nl", O_RDONLY);
+	fd = open("read_error.txt", O_RDONLY);
+	line = get_next_line(fd);
+	line = get_next_line(fd);
 	line = get_next_line(fd);
 	printf("%zu\n", ft_strlen(line));
 	printf(":%s:", line);
