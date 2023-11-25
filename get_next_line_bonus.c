@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 #include <unistd.h>
 #include <stdio.h>
@@ -94,6 +94,5 @@ char	*get_next_line(int fd)
 	}
 	line = read_line(fd, &buffers[fd], read_buffer);
 	free(read_buffer);
-	read_buffer = NULL;
 	return (line);
 }

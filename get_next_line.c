@@ -94,6 +94,5 @@ char	*get_next_line(int fd)
 	}
 	line = read_line(fd, &buffers[fd], read_buffer);
 	free(read_buffer);
-	read_buffer = NULL;
 	return (line);
 }
